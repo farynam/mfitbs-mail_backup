@@ -1,0 +1,9 @@
+version: '3.3'
+
+services:
+  offlineimap:
+    build: .
+    volumes:
+      - ./target/:/backup/
+      - ./conf/:/backup/conf/
+    restart: "no"
