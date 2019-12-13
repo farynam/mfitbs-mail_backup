@@ -3,6 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 . ${DIR}/functions.sh
+. ${DIR}/backup_incr_funs.sh
 . ${DIR}/globals.env
 . $1
 
@@ -56,5 +57,10 @@ write_log "Backup ended at: $(date -d @${end_time_backup})" "${LOG_FILE}"
 
 time_report="Backup time elapsed:${time_report_backup}.\n Sync time elapsed:${time_report_sync}"
 write_log "${time_report}" "${LOG_FILE}"
+
+last_version=$(get_last_version ${BACKUPS_DIR})
+
+mv ${BACKUP_BUFFER}/backup.log ${BACKUPS_DIR}/${last_version}/
+mv ${BACKUP_BUFFER}/rsync.log ${BACKUPS_DIR}/${last_version}/
 
 rm "${BLOCKING_FILE}"

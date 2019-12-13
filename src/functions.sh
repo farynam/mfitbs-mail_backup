@@ -1,13 +1,13 @@
 #!/bin/bash
 
 function write_log {
-    echo "$1" | tee -a "$2"
+    echo -e "$1" | tee -a "$2"
 }
 
 function redir_log {
     while read IN               # If it is output from command then loop it
     do
-        echo "${IN}" | tee -a ${1}
+        echo -e "${IN}" | tee -a ${1}
     done
 }
 
