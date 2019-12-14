@@ -14,17 +14,16 @@ messages_err_idx=0
 
 err_report() {
     echo "Error on line $1" > ${LOG_FILE}
+    rm "${BLOCKING_FILE}"
 }
 
 trap 'err_report $LINENO' ERR
 
 [ ! -d "${BACKUPS_DIR}" ] && mkdir -p "${BACKUPS_DIR}"
 
-if [ -d "${BACKUP_BUFFER}" ]; then
-    rm -r ${BACKUP_BUFFER}
+if [ ! -d "${TO_BACKUP}" ]; then
+    mkdir -p "${TO_BACKUP}"
 fi
-
-mkdir -p "${TO_BACKUP}"
 
 if [ -f ${BLOCKING_FILE} ]; then
   echo "Backup in progress skipping"
@@ -60,7 +59,7 @@ write_log "${time_report}" "${LOG_FILE}"
 
 last_version=$(get_last_version ${BACKUPS_DIR})
 
-mv ${BACKUP_BUFFER}/backup.log ${BACKUPS_DIR}/${last_version}/
-mv ${BACKUP_BUFFER}/rsync.log ${BACKUPS_DIR}/${last_version}/
+mv ${LOG_FILE} ${BACKUPS_DIR}/${last_version}/
+mv ${RSYNC_LOG_FILE} ${BACKUPS_DIR}/${last_version}/
 
 rm "${BLOCKING_FILE}"
