@@ -37,6 +37,8 @@ start_time_sync=$(get_time_sec)
 
 write_log "backup started at: $(date -d @${start_time_sync})" "${LOG_FILE}"
 
+export last_version=$(get_last_version ${BACKUPS_DIR})
+
 for email_dir in ${EMAILS_TO_BACKUP}
 do
     write_log "Capturing ${email_dir}" ${LOG_FILE}
@@ -57,7 +59,7 @@ write_log "Backup ended at: $(date -d @${end_time_backup})" "${LOG_FILE}"
 time_report="Backup time elapsed:${time_report_backup}.\n Sync time elapsed:${time_report_sync}"
 write_log "${time_report}" "${LOG_FILE}"
 
-last_version=$(get_last_version ${BACKUPS_DIR})
+
 
 mv ${LOG_FILE} ${BACKUPS_DIR}/${last_version}/
 mv ${RSYNC_LOG_FILE} ${BACKUPS_DIR}/${last_version}/

@@ -55,7 +55,6 @@ function remove_overflow {
 }
 
 file_removed=$(remove_overflow $NUM_BACKUPS $BACKUPS_DIR)
-last_version=$(get_last_version $BACKUPS_DIR)
 link_dst_opt=""
 
 if [ -n "$last_version" ]; then 
@@ -68,7 +67,7 @@ if [ -z $EXCLUDES ] || [ ! -f $EXCLUDES ]; then
 fi
 
 echo "starting sync from ${REMOTE_HOST_}${TO_BACKUP}/ to ${backup_dir}/boxes/"
-rsync -azrlh --stats $ssh_opt $excl_opt $link_dst_opt "${REMOTE_HOST_}${TO_BACKUP}/" "${backup_dir}/boxes/"
+rsync -arlh --stats $ssh_opt $excl_opt $link_dst_opt "${REMOTE_HOST_}${TO_BACKUP}/" "${backup_dir}/boxes/"
 
 
 
