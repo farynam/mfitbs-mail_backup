@@ -37,7 +37,7 @@ else
   REMOTE_HOST_="${REMOTE_HOST_}:"
 fi
 
-start_time=$(get_time_sec)
+#start_time=$(get_time_sec)
 export backup_dir="$BACKUPS_DIR/$start_time"
 mkdir -p "${backup_dir}/boxes"
 

@@ -33,7 +33,7 @@ if [ -f ${BLOCKING_FILE} ]; then
 fi
 
 start_time_sync=$(get_time_sec)
-
+export start_time=${start_time_sync}
 
 write_log "backup started at: $(date -d @${start_time_sync})" "${LOG_FILE}"
 
@@ -61,7 +61,7 @@ write_log "${time_report}" "${LOG_FILE}"
 
 
 
-mv ${LOG_FILE} ${BACKUPS_DIR}/${last_version}/
-mv ${RSYNC_LOG_FILE} ${BACKUPS_DIR}/${last_version}/
+mv ${LOG_FILE} ${BACKUPS_DIR}/${start_time_sync}/
+mv ${RSYNC_LOG_FILE} ${BACKUPS_DIR}/${start_time_sync}/
 
 rm "${BLOCKING_FILE}"
